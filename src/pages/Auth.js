@@ -1,14 +1,15 @@
 import './Auth.css';
 import React, { useState } from 'react';
+import { Button, TextField } from '@material-ui/core';
 
-function Auth() {
+function Auth(props) {
     const [login, setLogin] = useState('admin');
     const [password, setPassword] = useState('admin');
     return (
         <div className="Auth">
-            <input value={login} onChange={e => setLogin(e.target.value)}></input>
-            <input value={password} onChange={e => setPassword(e.target.value)}></input>
-            <button onClick={e => {
+            <TextField value={login} onChange={e => setLogin(e.target.value)}></TextField>
+            <TextField value={password} onChange={e => setPassword(e.target.value)}></TextField>
+            <Button variant="contained" color="primary" onClick={e => {
                 fetch('/token', {
                     method: 'POST',
                     headers: {
@@ -20,26 +21,23 @@ function Auth() {
                     .then(data => {
                         if (data.type === 'ok') {
                             localStorage.setItem('token', data.token);
+                            props.history.push('/');
                         }
-                        console.log(data)
                     })
-                    .catch(e => console.log(e));
-            }} >Войти</button>
-            <button onClick={e => {
+                    .catch(e => console.log('AuthError'));
+            }} >Войти</Button>
+            <Button variant="contained" onClick={e => {
                 fetch('/gettoken', {
                     headers: {
                         'authorization': localStorage.getItem('token')
                     }
                 })
-                    .then(r => r.json())
+                    .then(r => r.text())
                     .then(data => {
                         console.log(data)
                     })
                     .catch(e => console.log(e));
-            }}>Show</button>
-            <button onClick={e => {
-                localStorage.setItem('token', '');
-            }}>Logout</button>
+            }}>Show</Button>
         </div>
     );
 }

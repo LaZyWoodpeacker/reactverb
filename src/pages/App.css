@@ -1,8 +1,18 @@
 .App {
   text-align: center;
+  min-height: 100vh;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.grow {
+  flex-grow: 1;
+}
+
+.Fab {
+  position: fixed !important;
+  bottom: 2rem;
+  right: 2rem;
+}
+
+.AppBar {
+  position: fixed;
 }
