@@ -1,6 +1,6 @@
 import './App.css';
 import { connect } from 'react-redux'
-import { Button, Container, Typography, Toolbar, IconButton, AppBar, Fab, Grid } from '@material-ui/core';
+import { Button, Container, Typography, Toolbar, IconButton, AppBar, Fab, Grid, TextField } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import AddIcon from '@material-ui/icons/Add';
@@ -14,6 +14,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
+import Slide from '@material-ui/core/Slide';
 
 const useStyles = makeStyles({
     main: {
@@ -40,6 +41,7 @@ function App(props) {
     const classes = useStyles();
     const [removeDlg, setremoveDlg] = useState(false)
     const [chAddDlg, setChAddDlg] = useState(false)
+    const [curDlg, setCurDlg] = useState(null)
 
     useEffect(() => {
         fetch('/data.json')
@@ -84,13 +86,15 @@ function App(props) {
                                 <CardActions>
                                     <Button size="small" onClick={
                                         e => {
-                                            setChAddDlg(true)
-                                            props.dispatch({ type: 'CHANGE_EM_LIST', payload: i })
+                                            console.log(i);
+                                            setCurDlg(props.list[i]);
+                                            setChAddDlg(true);
+                                            // props.dispatch({ type: 'CHANGE_EM_LIST', payload: i })
                                         }
                                     }>Change</Button>
                                     <Button size="small" onClick={
                                         e => {
-                                            setremoveDlg(true)
+                                            setremoveDlg(true);
                                         }
                                     }>Remove</Button>
                                 </CardActions>
@@ -100,7 +104,18 @@ function App(props) {
                 </Grid>
             </Container>
             <Fab color="primary" aria-label="add" className="Fab" onClick={e => {
-                props.dispatch({ type: 'ADD_TO_LIST', payload: props.list.length + 1 })
+                setCurDlg({
+                    "id": -1,
+                    "verben": "",
+                    "frag": "",
+                    "transFrag": "",
+                    "trans": "",
+                    "dat": true,
+                    "pris": "",
+                    "prop": ""
+                });
+                setChAddDlg(true);
+                // props.dispatch({ type: 'ADD_TO_LIST', payload: props.list.length + 1 });
             }}>
                 <AddIcon />
             </Fab>
@@ -128,11 +143,31 @@ function App(props) {
                         <IconButton edge="start" color="inherit" onClick={e => setChAddDlg(false)} aria-label="close">
                             <CloseIcon />
                         </IconButton>
-                        <Typography variant="h6" >Sound</Typography>
+                        <Typography variant="h6">Sound</Typography>
                         <Button autoFocus color="inherit" onClick={e => setChAddDlg(false)}>save</Button>
                     </Toolbar>
                 </AppBar>
-
+                <DialogContent>
+                    <DialogContentText>
+                        <Typography component="p">test1</Typography>
+                        <Typography component="p">test2</Typography>
+                        <Typography component="p">test3</Typography>
+                        <Typography component="p">test4</Typography>
+                        <Typography component="p">test5</Typography>
+                        <Typography component="p">test6</Typography>
+                        <Typography component="p">test7</Typography>
+                        <Typography component="p">test8</Typography>
+                        <TextField
+                            autoFocus
+                            margin="dense"
+                            id="name"
+                            label="Email Address"
+                            type="email"
+                            fullWidth
+                            value="test"
+                        />
+                    </DialogContentText>
+                </DialogContent>
             </Dialog>
         </div >
     );
