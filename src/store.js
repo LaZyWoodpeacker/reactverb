@@ -1,7 +1,10 @@
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+
 
 let newStore = {
-    list: [1, 2, 3]
+    list: [1, 2, 3],
+    loading: true
 }
 
 function reducer(state, action) {
@@ -14,11 +17,11 @@ function reducer(state, action) {
             const list = [...state.list];
             list.splice(action.payload, 1, 23);
             return { ...state, list: list };
+        case 'UPLOAD_LIST':
+            return { ...state, list: action.payload };
         default:
             return newStore
     }
 }
 
-let store = createStore(reducer);
-
-export default store;
+export default createStore(reducer, applyMiddleware(thunk));

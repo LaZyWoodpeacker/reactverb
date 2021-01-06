@@ -1,0 +1,30 @@
+[
+    {
+        "id": 0,
+        "verben": "abhängen",
+        "frag": "Das hängt von dir ab",
+        "transFrag": "Это зависит от вас",
+        "trans": "Зависит",
+        "dat": true,
+        "pris": "ab",
+        "prop": "von"
+    },
+    {
+        "id": 1,
+        "verben": "achten",
+        "frag": "Soll dein Partner auf Mode achten?",
+        "transFrag": "Должен ли ваш партнер быть в моде?",
+        "trans": "обратить внимание",
+        "prop": "auf"
+    },
+    {
+        "id": 2,
+        "verben": "anfangen",
+        "frag": "Morgen fange ich mit der Arbeit an",
+        "transFrag": "Завтра я начну работать",
+        "trans": "Начинать",
+        "pris": "an",
+        "dat": true,
+        "prop": "mit"
+    }
+]
