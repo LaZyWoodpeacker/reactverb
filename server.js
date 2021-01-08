@@ -1,3 +1,4 @@
+const fs = require('fs');
 const express = require('express')
 const http = require('http');
 const path = require('path');
@@ -32,6 +33,13 @@ app.get('/gettoken', auth, (req, res) => {
     const token = req.headers['authorization'];
     const decode = jwt.decode(token);
     res.json({ token, decode })
+})
+
+app.post('/save', auth, (req, res) => {
+    const token = req.headers['authorization'];
+    const decode = jwt.decode(token);
+    fs.writeFileSync('data.json', JSON.stringify(req.body));
+    res.sendStatus(200);
 })
 
 app.use('/', express.static('build'))

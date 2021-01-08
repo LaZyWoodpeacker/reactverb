@@ -1,27 +1,36 @@
-import './App.css';
 import { connect } from 'react-redux'
-import { Button, Container, Typography, Toolbar, IconButton, AppBar, Fab, Grid, TextField } from '@material-ui/core';
+import { Button, Container, Typography, Toolbar, IconButton, AppBar, Fab, Grid, Backdrop, CircularProgress } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import MenuIcon from '@material-ui/icons/Menu';
+// import MenuIcon from '@material-ui/icons/Menu';
 import AddIcon from '@material-ui/icons/Add';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import SaveIcon from '@material-ui/icons/Save';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { useState, useEffect } from 'react';
-import CloseIcon from '@material-ui/icons/Close';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import Slide from '@material-ui/core/Slide';
 
-const useStyles = makeStyles({
+import { AddChangeDlg, ConfirmDlg } from './Dialogs'
+
+const useStyles = makeStyles(theme => ({
+    app: {
+        textAlign: 'center',
+        minHeight: '100vh'
+    },
     main: {
-        marginTop: 10
+        marginTop: 80
+    },
+    grow: {
+        flexGrow: 1
+    },
+    fab: {
+        position: 'fixed!important',
+        bottom: '2rem',
+        right: '2rem',
     },
     card: {
         width: 275,
+        height: 300,
         margin: 5
     },
     bullet: {
@@ -35,142 +44,152 @@ const useStyles = makeStyles({
     pos: {
         marginBottom: 12,
     },
-});
+    backdrop: {
+        zIndex: theme.zIndex.drawer + 1,
+        color: '#fff',
+    }
+}));
+
 
 function App(props) {
     const classes = useStyles();
     const [removeDlg, setremoveDlg] = useState(false)
     const [chAddDlg, setChAddDlg] = useState(false)
     const [curDlg, setCurDlg] = useState(null)
+    const [id, setId] = useState(null)
 
-    useEffect(() => {
+    if (!localStorage.getItem('token')) {
+        props.history.push('/auth');
+    }
+
+    const getData = () => disp => {
+        disp({ type: 'SET_LOADING', payload: true })
         fetch('/data.json')
             .then(r => r.json())
             .then(r => {
                 props.dispatch({ type: 'UPLOAD_LIST', payload: r })
             })
-    })
-
-    if (!localStorage.getItem('token')) {
-        props.history.push('/auth');
+            .finally(e => disp({ type: 'SET_LOADING', payload: false }))
     }
+
+    const saveData = () => disp => {
+        disp({ type: 'SET_LOADING', payload: true })
+        fetch('/save', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'authorization': localStorage.getItem('token')
+            },
+            body: JSON.stringify(props.list.map((e, i) => ({ ...e, id: i })))
+        })
+            .then(r => {
+                disp({ type: 'SET_SAVE', payload: false })
+            })
+            .finally(e => disp({ type: 'SET_LOADING', payload: false }))
+            .catch(e => console.log(e));
+    }
+
+    useEffect(() => {
+        props.dispatch(getData())
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
     return (
-        <div className="App">
-            <AppBar className="AppBar" position="static">
+        <div className={classes.app}>
+            <AppBar position="fixed">
                 <Container>
                     <Toolbar>
-                        <IconButton edge="start" color="inherit" aria-label="menu">
-                            <MenuIcon />
+                        <IconButton edge="start" color="inherit">
+                            {/* <MenuIcon /> */}
                         </IconButton>
-                        <Typography variant="h6" className="grow" ></Typography>
-                        <Button color="inherit" onClick={e => {
+                        <Typography variant="h6" className={classes.grow} ></Typography>
+                        {props.save && <IconButton edge="start" color="inherit" onClick={e => {
+                            props.dispatch(saveData())
+                        }}>
+                            <SaveIcon />
+                        </IconButton>
+                        }
+                        <IconButton edge="start" color="inherit" onClick={e => {
                             localStorage.removeItem('token');
                             props.history.push('/auth');
-                        }}>Logout</Button>
+                        }}>
+                            <ExitToAppIcon />
+                        </IconButton>
                     </Toolbar>
                 </Container>
             </AppBar>
-            <Container className={classes.main}>
-                <Grid container
-                    justify="center"
-                    alignItems="stretch">
-                    {props.list.map((e, i) => {
-                        return <div key={i}>
-                            <Card className={classes.card} >
-                                <CardContent>
-                                    <Typography variant="h5" component="h2">{e.trans}</Typography>
-                                    <Typography className={classes.pos} color="textSecondary">{e.verben}</Typography>
-                                    <Typography variant="body2" component="p">{e.transFrag}</Typography>
-                                    <Typography variant="body2" component="p">{e.frag}</Typography>
-                                </CardContent>
-                                <CardActions>
-                                    <Button size="small" onClick={
-                                        e => {
-                                            console.log(i);
-                                            setCurDlg(props.list[i]);
-                                            setChAddDlg(true);
-                                            // props.dispatch({ type: 'CHANGE_EM_LIST', payload: i })
-                                        }
-                                    }>Change</Button>
-                                    <Button size="small" onClick={
-                                        e => {
-                                            setremoveDlg(true);
-                                        }
-                                    }>Remove</Button>
-                                </CardActions>
-                            </Card>
-                        </div>
-                    })}
-                </Grid>
-            </Container>
-            <Fab color="primary" aria-label="add" className="Fab" onClick={e => {
+            <main>
+                <Container className={classes.main}>
+                    <Grid container
+                        justify="center"
+                        alignItems="stretch">
+                        {props.list.map((e, i) => {
+                            return <div key={i}>
+                                <Card className={classes.card} >
+                                    <CardContent>
+                                        <Typography variant="h5" component="h2">{e.trans}</Typography>
+                                        <Typography className={classes.pos} color="textSecondary">{e.verben}</Typography>
+                                        <Typography variant="body2" component="p">{e.transFrag}</Typography>
+                                        <Typography variant="body2" component="p">{e.frag}</Typography>
+                                    </CardContent>
+                                    <CardActions>
+                                        <Button size="small" onClick={
+                                            e => {
+                                                setId(i);
+                                                setCurDlg(props.list[i]);
+                                                setChAddDlg(true);
+                                            }
+                                        }>Change</Button>
+                                        <Button size="small" onClick={
+                                            e => {
+                                                setId(i);
+                                                setremoveDlg(true);
+                                            }
+                                        }>Remove</Button>
+                                    </CardActions>
+                                </Card>
+                            </div>
+                        })}
+                    </Grid>
+                </Container>
+            </main>
+            <Fab color="primary" aria-label="add" className={classes.fab} onClick={e => {
                 setCurDlg({
                     "id": -1,
                     "verben": "",
-                    "frag": "",
                     "transFrag": "",
                     "trans": "",
-                    "dat": true,
+                    "dat": false,
                     "pris": "",
                     "prop": ""
                 });
+                setId(-1);
                 setChAddDlg(true);
-                // props.dispatch({ type: 'ADD_TO_LIST', payload: props.list.length + 1 });
             }}>
                 <AddIcon />
             </Fab>
-            <Dialog
-                open={removeDlg}
-                onClose={e => console.log("test")}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-            >
-                <DialogTitle id="alert-dialog-title">Вы уверенны?</DialogTitle>
-                <DialogContent>
-                    <DialogContentText id="alert-dialog-description">Вы уверены что хотите удалить?</DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={e => setremoveDlg(false)} color="primary">Нет</Button>
-                    <Button onClick={e => {
-                        setremoveDlg(false)
-                        // props.dispatch({ type: 'REMOVE_FROM_LIST', payload: i })
-                    }} color="primary" autoFocus>Да</Button>
-                </DialogActions>
-            </Dialog>
-            <Dialog fullScreen open={chAddDlg} onClose={e => setChAddDlg(false)} >
-                <AppBar className={classes.appBar}>
-                    <Toolbar>
-                        <IconButton edge="start" color="inherit" onClick={e => setChAddDlg(false)} aria-label="close">
-                            <CloseIcon />
-                        </IconButton>
-                        <Typography variant="h6">Sound</Typography>
-                        <Button autoFocus color="inherit" onClick={e => setChAddDlg(false)}>save</Button>
-                    </Toolbar>
-                </AppBar>
-                <DialogContent>
-                    <DialogContentText>
-                        <Typography component="p">test1</Typography>
-                        <Typography component="p">test2</Typography>
-                        <Typography component="p">test3</Typography>
-                        <Typography component="p">test4</Typography>
-                        <Typography component="p">test5</Typography>
-                        <Typography component="p">test6</Typography>
-                        <Typography component="p">test7</Typography>
-                        <Typography component="p">test8</Typography>
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            id="name"
-                            label="Email Address"
-                            type="email"
-                            fullWidth
-                            value="test"
-                        />
-                    </DialogContentText>
-                </DialogContent>
-            </Dialog>
+            <ConfirmDlg show={removeDlg} id={id} onClose={(remove, id) => {
+                setremoveDlg(false)
+                if (remove) {
+                    props.dispatch({ type: 'REMOVE_FROM_LIST', payload: id })
+                }
+            }}></ConfirmDlg>
+            <AddChangeDlg show={chAddDlg} id={id} em={curDlg} onClose={(save, id, obj) => {
+                setChAddDlg(false)
+                if (save) {
+                    if (id === -1) {
+                        props.dispatch({ type: 'ADD_TO_LIST', payload: obj });
+                    }
+                    else {
+                        props.dispatch({ type: 'CHANGE_EM_LIST', payload: { id, obj } })
+                    }
+                }
+            }}></AddChangeDlg>
+            <Backdrop className={classes.backdrop} open={props.loading} >
+                <CircularProgress color="inherit" />
+            </Backdrop>
         </div >
     );
 }
 
-export default connect(s => ({ list: s.list }))(App);
+export default connect(s => ({ ...s }))(App);

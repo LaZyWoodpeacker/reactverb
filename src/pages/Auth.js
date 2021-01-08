@@ -1,4 +1,3 @@
-import './Auth.css';
 import React, { useState } from 'react';
 import { Button, TextField } from '@material-ui/core';
 
@@ -21,7 +20,7 @@ function Auth(props) {
                     .then(data => {
                         if (data.type === 'ok') {
                             localStorage.setItem('token', data.token);
-                            props.history.push('/');
+                            props.history.push('/admin');
                         }
                     })
                     .catch(e => console.log('AuthError'));
@@ -37,7 +36,7 @@ function Auth(props) {
                         console.log(data)
                     })
                     .catch(e => console.log(e));
-            }}>Show</Button>
+            }}>Показать токен в консоль</Button>
         </div>
     );
 }

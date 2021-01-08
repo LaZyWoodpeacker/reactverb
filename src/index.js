@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './pages/App';
 import Auth from './pages/Auth';
+import Game from './pages/Game';
 import { BrowserRouter, Route } from "react-router-dom";
 import { Provider } from 'react-redux'
 import store from './store'
@@ -11,7 +12,8 @@ ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
       <Route path="/auth" component={Auth} exact />
-      <Route path="/" component={App} exact />
+      <Route path="/admin" component={App} exact />
+      <Route path="/" component={Game} exact />
     </BrowserRouter>
   </Provider>,
   document.getElementById('root')
