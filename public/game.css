@@ -44,17 +44,3 @@ body {
 .backdrop--visible {
     display: flex;
 }
-
-.antwort {
-    cursor: pointer;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.antwort_btn {
-    padding: 5px;
-    border-radius: 3px;
-    border: 1px solid black;
-    margin: 3px;
-}

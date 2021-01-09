@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './pages/App';
 import Auth from './pages/Auth';
-import Game from './pages/Game';
 import { BrowserRouter, Route } from "react-router-dom";
 import { Provider } from 'react-redux'
 import store from './store'

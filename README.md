@@ -1,4 +1,12 @@
-# Getting Started with Create React App
+# Start app
 
-"startserver": "nodemon server.js",
-"start": "react-scripts start",
+## make
+`
+npm run build
+node server.js
+`
+## Test
+http://localhost:3001
+
+## Admin
+http://localhost:3001/admin

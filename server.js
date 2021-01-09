@@ -38,12 +38,12 @@ app.get('/gettoken', auth, (req, res) => {
 app.post('/save', auth, (req, res) => {
     const token = req.headers['authorization'];
     const decode = jwt.decode(token);
-    fs.writeFileSync('build/data.json', JSON.stringify(req.body));
+    fs.writeFileSync(__dirname + '/build/data.json', JSON.stringify(req.body));
     res.sendStatus(200);
 })
 
 app.get('/', (req, res) => {
-    res.json({ test: 1 })
+    res.sendFile(path.join(__dirname + '/build/game.html'));
 })
 app.use('/', express.static('build'))
 app.get('*', (req, res) => {
