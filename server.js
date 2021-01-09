@@ -38,13 +38,18 @@ app.get('/gettoken', auth, (req, res) => {
 app.post('/save', auth, (req, res) => {
     const token = req.headers['authorization'];
     const decode = jwt.decode(token);
-    fs.writeFileSync('data.json', JSON.stringify(req.body));
+    fs.writeFileSync('build/data.json', JSON.stringify(req.body));
     res.sendStatus(200);
 })
 
+app.get('/', (req, res) => {
+    res.json({ test: 1 })
+})
 app.use('/', express.static('build'))
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname + '/build/index.html'));
 });
+
+
 
 httpServer.listen(port, () => console.log(`Server started on port ${port}`));

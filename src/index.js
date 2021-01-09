@@ -13,7 +13,7 @@ ReactDOM.render(
     <BrowserRouter>
       <Route path="/auth" component={Auth} exact />
       <Route path="/admin" component={App} exact />
-      <Route path="/" component={Game} exact />
+      {/* <Route path="/" component={Game} exact /> */}
     </BrowserRouter>
   </Provider>,
   document.getElementById('root')

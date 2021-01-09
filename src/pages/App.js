@@ -18,7 +18,8 @@ const useStyles = makeStyles(theme => ({
         minHeight: '100vh'
     },
     main: {
-        marginTop: 80
+        marginTop: 80,
+        marginBottom: 100,
     },
     grow: {
         flexGrow: 1
@@ -30,7 +31,6 @@ const useStyles = makeStyles(theme => ({
     },
     card: {
         width: 275,
-        height: 300,
         margin: 5
     },
     bullet: {
@@ -151,23 +151,23 @@ function App(props) {
                             </div>
                         })}
                     </Grid>
+                    <Fab color="primary" aria-label="add" className={classes.fab} onClick={e => {
+                        setCurDlg({
+                            "id": -1,
+                            "verben": "",
+                            "transFrag": "",
+                            "trans": "",
+                            "dat": false,
+                            "pris": "",
+                            "prop": ""
+                        });
+                        setId(-1);
+                        setChAddDlg(true);
+                    }}>
+                        <AddIcon />
+                    </Fab>
                 </Container>
             </main>
-            <Fab color="primary" aria-label="add" className={classes.fab} onClick={e => {
-                setCurDlg({
-                    "id": -1,
-                    "verben": "",
-                    "transFrag": "",
-                    "trans": "",
-                    "dat": false,
-                    "pris": "",
-                    "prop": ""
-                });
-                setId(-1);
-                setChAddDlg(true);
-            }}>
-                <AddIcon />
-            </Fab>
             <ConfirmDlg show={removeDlg} id={id} onClose={(remove, id) => {
                 setremoveDlg(false)
                 if (remove) {
