@@ -31,7 +31,7 @@ const useStyles = makeStyles(theme => ({
     },
     card: {
         width: 275,
-        margin: 5
+        height: '100%'
     },
     bullet: {
         display: 'inline-block',
@@ -122,9 +122,9 @@ function App(props) {
                 <Container className={classes.main}>
                     <Grid container
                         justify="center"
-                        alignItems="stretch">
+                        spacing={2}>
                         {props.list.map((e, i) => {
-                            return <div key={i}>
+                            return (<Grid item key={i}>
                                 <Card className={classes.card} >
                                     <CardContent>
                                         <Typography variant="h5" component="h2">{e.trans}</Typography>
@@ -139,16 +139,16 @@ function App(props) {
                                                 setCurDlg(props.list[i]);
                                                 setChAddDlg(true);
                                             }
-                                        }>Change</Button>
+                                        }>Изменить</Button>
                                         <Button size="small" onClick={
                                             e => {
                                                 setId(i);
                                                 setremoveDlg(true);
                                             }
-                                        }>Remove</Button>
+                                        }>Удалить</Button>
                                     </CardActions>
                                 </Card>
-                            </div>
+                            </Grid>)
                         })}
                     </Grid>
                     <Fab color="primary" aria-label="add" className={classes.fab} onClick={e => {

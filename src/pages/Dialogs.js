@@ -35,12 +35,10 @@ function AddChangeDlg(props) {
     const [frag, setFrag] = useState(null)
     const [transFrag, setTransFrag] = useState(null)
     const [trans, setTrans] = useState(null)
-    const [dat, setDat] = useState(null)
     const [pris, setPris] = useState(null)
-    const [prop, setProp] = useState(null)
 
     function getObj() {
-        return { id, verben, frag, transFrag, trans, dat, pris, prop }
+        return { id, verben, frag, transFrag, trans, pris }
     }
 
     useEffect(() => {
@@ -50,9 +48,7 @@ function AddChangeDlg(props) {
             setFrag(props.em.frag)
             setTransFrag(props.em.transFrag)
             setTrans(props.em.trans)
-            setDat(props.em.dat)
             setPris(props.em.pris)
-            setProp(props.em.prop)
         }
     }, [props.id, props.em])
 
@@ -64,8 +60,8 @@ function AddChangeDlg(props) {
                         <IconButton edge="start" color="inherit" onClick={e => props.onClose(false)} aria-label="close">
                             <CloseIcon />
                         </IconButton>
-                        <Typography variant="h6" className={classes.grow}>Добавить</Typography>
-                        <Button autoFocus color="inherit" onClick={e => props.onClose(true, props.id, getObj())}>Изменить</Button>
+                        <Typography variant="h6" className={classes.grow}></Typography>
+                        <Button autoFocus color="inherit" onClick={e => props.onClose(true, props.id, getObj())}>{(id === -1) ? 'Добавить' : 'Изменить'}</Button>
                     </Toolbar>
                 </Container>
             </AppBar>
@@ -76,45 +72,33 @@ function AddChangeDlg(props) {
                         <TextField
                             autoFocus
                             fullWidth
-                            label="verben"
+                            label="Глагол"
                             value={verben}
                             onChange={e => setVerben(e.target.value)}
                         />
                         <TextField
                             fullWidth
-                            label="frag"
-                            value={frag || ''}
-                            onChange={e => setFrag(e.target.value)}
-                        />
-                        <TextField
-                            fullWidth
-                            label="transFrag"
-                            value={transFrag || ''}
-                            onChange={e => setTransFrag(e.target.value)}
-                        />
-                        <TextField
-                            fullWidth
-                            label="trans"
+                            label="Перевод глагола"
                             value={trans || ''}
                             onChange={e => setTrans(e.target.value)}
                         />
                         <TextField
                             fullWidth
-                            label="dat"
-                            value={dat || ''}
-                            onChange={e => setDat(e.target.value)}
+                            label="Вопрос"
+                            value={frag || ''}
+                            onChange={e => setFrag(e.target.value)}
                         />
                         <TextField
                             fullWidth
-                            label="pris"
+                            label="Перевод вопроса"
+                            value={transFrag || ''}
+                            onChange={e => setTransFrag(e.target.value)}
+                        />
+                        <TextField
+                            fullWidth
+                            label="Приставка"
                             value={pris || ''}
                             onChange={e => setPris(e.target.value)}
-                        />
-                        <TextField
-                            fullWidth
-                            label="prop"
-                            value={prop || ''}
-                            onChange={e => setProp(e.target.value)}
                         />
                     </div>
                 </Container>
