@@ -5,7 +5,7 @@
         "trans": "Зависит",
         "transFrag": "Это зависит от вас",
         "verben": "abhängen",
-        "frag": "Das hängt von dir ab"
+        "frag": "Das hängt von dir"
     },
     {
         "id": 1,
@@ -13,7 +13,7 @@
         "trans": "Начинать",
         "transFrag": "Завтра я начну работать",
         "verben": "anfangen",
-        "frag": "Morgen fange ich mit der Arbeit an"
+        "frag": "Morgen fange ich mit der Arbeit"
     },
     {
         "id": 2,
@@ -21,7 +21,7 @@
         "trans": "Звонить вызывать",
         "transFrag": "Я звоню доктору",
         "verben": "anrufen",
-        "frag": "Ich rufe beim Arzt an"
+        "frag": "Ich rufe beim Arzt"
     },
     {
         "id": 3,
@@ -29,7 +29,7 @@
         "trans": "объезжать",
         "transFrag": "Он объезжает дерево",
         "verben": "umfahren",
-        "frag": "Er fährt den Baum um"
+        "frag": "Er fährt den Baum"
     },
     {
         "id": 4,
@@ -37,7 +37,7 @@
         "trans": "приглашать",
         "transFrag": "Я приглашаю вас на мой день рождения",
         "verben": "einladen",
-        "frag": "Ich lade dich zu meiner Geburtstagsfeier ein"
+        "frag": "Ich lade dich zu meiner Geburtstagsfeier"
     },
     {
         "id": 5,
@@ -45,7 +45,7 @@
         "trans": "размышлять",
         "transFrag": "Она много думает о своей работе",
         "verben": "nachdenken",
-        "frag": "Sie denkt viel über ihren Job nach"
+        "frag": "Sie denkt viel über ihren Job"
     },
     {
         "id": 6,
@@ -53,7 +53,7 @@
         "trans": "включать",
         "transFrag": "Он включает радио",
         "verben": "anstellen",
-        "frag": "Er stellt das Radio an"
+        "frag": "Er stellt das Radio"
     },
     {
         "id": 7,
@@ -61,6 +61,6 @@
         "trans": "приготовляться",
         "transFrag": "Она готовит собак для их задач",
         "verben": "vorbereiten",
-        "frag": "Sie bereitet die Hunde auf ihre Aufgaben vor"
+        "frag": "Sie bereitet die Hunde auf ihre Aufgaben"
     }
 ]

@@ -22,6 +22,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    position: relative;
 }
 
 .backdrop {
@@ -45,8 +46,9 @@ body {
     display: flex;
 }
 
-.frag {
-    height: 40%;
+.game_test {
+    background-color: white;
+    position: relative;
 }
 
 .frag_text {
@@ -81,12 +83,12 @@ body {
 }
 
 .fragblock__btn {
-    width: 45%;
+    width: 40%;
     cursor: pointer;
     text-align: center;
     font-weight: bold;
     text-transform: uppercase;
-    margin: 2.5%;
+    margin: 5%;
     height: 35px;
     border: 2px solid blue;
     border-radius: 15px;
@@ -101,6 +103,7 @@ body {
 .frag_trans {
     color: grey;
     text-align: center;
+    margin-bottom: 4rem;
 }
 
 .stat {
@@ -113,6 +116,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    animation-duration: .5s;
+    animation-name: slidein;
 }
 
 .score {
@@ -120,4 +125,62 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    animation-duration: .5s;
+    animation-name: slidein;
+}
+
+.anim {
+    animation-duration: .5s;
+    animation-name: slidein;
+}
+
+@keyframes slidein {
+    from {
+        opacity: 0;
+        transform: scale(0, 0);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1, 1);
+    }
+}
+
+@keyframes slideinantwort {
+    0% {
+        opacity: 0;
+        transform: scale(0, 0);
+    }
+    20% {
+        opacity: 1;
+        transform: scale(1, 1);
+    }
+    80% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+.variant_show {
+    display: flex;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: -3;
+    background-color: white;
+    pointer-events: none;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 1rem;
+    border-radius: 5%;
+}
+
+.variant_show.anim {
+    z-index: 1;
+    animation-duration: 1s;
+    animation-name: slideinantwort;
 }

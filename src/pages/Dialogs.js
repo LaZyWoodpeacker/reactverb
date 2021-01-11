@@ -50,7 +50,7 @@ function AddChangeDlg(props) {
             setTrans(props.em.trans)
             setPris(props.em.pris)
         }
-    }, [props.id, props.em])
+    }, [props.id])
 
     return (
         <Dialog fullScreen open={props.show} onClose={e => props.onClose(false)} TransitionComponent={Transition}>
@@ -83,22 +83,24 @@ function AddChangeDlg(props) {
                             onChange={e => setTrans(e.target.value)}
                         />
                         <TextField
-                            fullWidth
                             label="Вопрос"
+                            multiline
+                            fullWidth
                             value={frag || ''}
                             onChange={e => setFrag(e.target.value)}
                         />
                         <TextField
+                            label="Приставка"
                             fullWidth
-                            label="Перевод вопроса"
-                            value={transFrag || ''}
-                            onChange={e => setTransFrag(e.target.value)}
+                            value={pris || ''}
+                            onChange={e => setPris(e.target.value)}
                         />
                         <TextField
                             fullWidth
-                            label="Приставка"
-                            value={pris || ''}
-                            onChange={e => setPris(e.target.value)}
+                            multiline
+                            label="Перевод вопроса"
+                            value={transFrag || ''}
+                            onChange={e => setTransFrag(e.target.value)}
                         />
                     </div>
                 </Container>
