@@ -34,7 +34,7 @@ class UI {
         this.game_test = document.createElement('div');
         this.game_test.classList.add('game_test');
         this.game_test.addEventListener('animationend', () => {
-            console.log('test')
+            // console.log('test')
             ui.game_test.classList.remove('anim');
         });
 
@@ -130,7 +130,7 @@ class UI {
         this.wnd.innerHTML = '';
         const div = document.createElement('div');
         div.classList.add('score');
-        div.innerHTML = `<h2>Неправильных ответов:${this.wrong_antwort}</h2>`;
+        div.innerHTML = `<h2>Неправильных ответов: ${this.wrong_antwort}</h2>`;
         const newGameBtn = document.createElement('button');
         newGameBtn.classList.add('fragblock__btn');
         newGameBtn.innerText = 'НОВЫЙ ТЕСТ'
@@ -147,7 +147,7 @@ class UI {
 
     new() {
         this.game = new Array(this.data.length).fill(0).map((e, i) => i).sort(() => .5 - Math.random());
-        this.prists = new Set(this.data.map(e => e.pris));
+        this.prists = new Set(this.data.map(e => e.pris).concat('vor', 'auf', 'ab', 'an'));
         this.turn = 0;
         this.wrong_antwort = 0;
         this.all = this.game.length;
@@ -169,6 +169,7 @@ class UI {
     }
 
     wrong(id) {
+        this.game.push(id);
         this.game.push(id);
         this.game = this.game.sort(() => .5 - Math.random());
     }

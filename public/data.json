@@ -22,45 +22,5 @@
         "transFrag": "Я звоню доктору",
         "verben": "anrufen",
         "frag": "Ich rufe beim Arzt"
-    },
-    {
-        "id": 3,
-        "pris": "um",
-        "trans": "объезжать",
-        "transFrag": "Он объезжает дерево",
-        "verben": "umfahren",
-        "frag": "Er fährt den Baum"
-    },
-    {
-        "id": 4,
-        "pris": "ein",
-        "trans": "приглашать",
-        "transFrag": "Я приглашаю вас на мой день рождения",
-        "verben": "einladen",
-        "frag": "Ich lade dich zu meiner Geburtstagsfeier"
-    },
-    {
-        "id": 5,
-        "pris": "nach",
-        "trans": "размышлять",
-        "transFrag": "Она много думает о своей работе",
-        "verben": "nachdenken",
-        "frag": "Sie denkt viel über ihren Job"
-    },
-    {
-        "id": 6,
-        "pris": "an",
-        "trans": "включать",
-        "transFrag": "Он включает радио",
-        "verben": "anstellen",
-        "frag": "Er stellt das Radio"
-    },
-    {
-        "id": 7,
-        "pris": "vor",
-        "trans": "приготовляться",
-        "transFrag": "Она готовит собак для их задач",
-        "verben": "vorbereiten",
-        "frag": "Sie bereitet die Hunde auf ihre Aufgaben"
     }
 ]
